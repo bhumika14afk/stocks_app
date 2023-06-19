@@ -73,9 +73,19 @@ class _HomePageState extends State<HomePage> {
                 FocusScope.of(context).unfocus();
               },
               onChanged: filterStocks,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: 'Search',
-                suffixIcon: Icon(Icons.search),
+                prefixIcon: IconButton(
+                    onPressed: () {
+                      FocusScope.of(context).unfocus();
+                    },
+                    icon: const Icon(Icons.close)),
+                suffixIcon: IconButton(
+                    onPressed: () {
+                      filterStocks;
+                      FocusScope.of(context).unfocus();
+                    },
+                    icon: const Icon(Icons.search)),
               ),
             ),
           ),

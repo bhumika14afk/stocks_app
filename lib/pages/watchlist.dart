@@ -46,8 +46,10 @@ class WatchlistProvider with ChangeNotifier {
   List<StockData> get watchlist => _watchlist;
 
   void addToWatchlist(StockData stock) {
-    _watchlist.add(stock);
-    notifyListeners();
+    if (!_watchlist.contains(stock)) {
+      _watchlist.add(stock);
+      notifyListeners();
+    }
   }
 
   void removeFromWatchlist(StockData stock) {
