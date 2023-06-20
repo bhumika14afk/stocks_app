@@ -28,9 +28,16 @@ class _WatchlistState extends State<Watchlist> {
             title: Text('${stockData.symbol}'),
             subtitle: Text('Latest Price: ${stockData.latestPrice}'),
             trailing: IconButton(
-              icon: const Icon(Icons.close),
+              icon: const Icon(Icons.delete),
               onPressed: () {
                 watchlistProvider.removeFromWatchlist(stockData);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text(
+                      'Removed from Watchlist',
+                    ),
+                  ),
+                );
               },
             ),
           );

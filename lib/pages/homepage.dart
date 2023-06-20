@@ -59,6 +59,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final watchlistProvider = Provider.of<WatchlistProvider>(context);
+    final watchlist = watchlistProvider.watchlist;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Trade Brains"),
@@ -94,15 +96,37 @@ class _HomePageState extends State<HomePage> {
               itemCount: filteredStockDataList.length,
               itemBuilder: (context, index) {
                 final stockData = filteredStockDataList[index];
+                final isInWatchlist = watchlist.contains(stockData);
                 return ListTile(
                   title: Text('${stockData.symbol}'),
                   subtitle: Text('Latest Price: ${stockData.latestPrice}'),
-                  trailing: IconButton(
-                    icon: const Icon(Icons.add),
-                    onPressed: () {
-                      addToWatchlist(stockData);
-                    },
-                  ),
+                  trailing: isInWatchlist
+                      ? IconButton(
+                          icon: const Icon(Icons.delete),
+                          onPressed: () {
+                            watchlistProvider.removeFromWatchlist(stockData);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                  'Removed from Watchlist',
+                                ),
+                              ),
+                            );
+                          },
+                        )
+                      : IconButton(
+                          icon: const Icon(Icons.add),
+                          onPressed: () {
+                            addToWatchlist(stockData);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                  'Added to Watchlist',
+                                ),
+                              ),
+                            );
+                          },
+                        ),
                 );
               },
             ),
