@@ -16,7 +16,9 @@ class _WatchlistState extends State<Watchlist> {
     final watchlist = watchlistProvider.watchlist;
 
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
+        backgroundColor: Colors.black,
         title: const Text("Watchlist"),
         centerTitle: true,
       ),
@@ -26,7 +28,7 @@ class _WatchlistState extends State<Watchlist> {
           final stockData = watchlist[index];
           return ListTile(
             title: Text('${stockData.symbol}'),
-            subtitle: Text('Latest Price: ${stockData.latestPrice}'),
+            subtitle: Text('Latest Price: ${stockData.latestPrice} INR'),
             trailing: IconButton(
               icon: const Icon(Icons.delete),
               onPressed: () {

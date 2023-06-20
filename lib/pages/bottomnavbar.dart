@@ -16,6 +16,9 @@ class _NavBarState extends State<NavBar> {
     return CupertinoTabScaffold(
       backgroundColor: Colors.black,
       tabBar: CupertinoTabBar(
+        backgroundColor: Colors.black,
+        activeColor: Colors.white,
+        inactiveColor: Colors.grey.shade400,
         height: 60,
         items: const [
           BottomNavigationBarItem(

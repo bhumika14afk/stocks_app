@@ -20,11 +20,11 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     final urls = [
-      'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=IBM&outputsize=full',
-      'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=TSCO.LON&outputsize=full',
-      'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=SHOP.TRT&outputsize=full',
-      'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=GPV.TRV&outputsize=full',
-      'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=DAI.DEX&outputsize=full',
+      'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=TATACHEM.BSE&outputsize=full',
+      'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=TATACOMM.BSE&outputsize=full',
+      'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=TATAELXSI.BSE&outputsize=full',
+      'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=TATAPOWER.BSE&outputsize=full',
+      'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=TATACOFFEE.BSE&outputsize=full',
     ];
 
     const apiKey = 'GA5AYEWFF288PV59';
@@ -62,7 +62,9 @@ class _HomePageState extends State<HomePage> {
     final watchlistProvider = Provider.of<WatchlistProvider>(context);
     final watchlist = watchlistProvider.watchlist;
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
+        backgroundColor: Colors.black,
         title: const Text("Trade Brains"),
         centerTitle: true,
       ),
@@ -71,23 +73,39 @@ class _HomePageState extends State<HomePage> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextField(
-              onTap: () {
+              onTapOutside: ((event) {
                 FocusScope.of(context).unfocus();
-              },
+              }),
+              textInputAction: TextInputAction.search,
               onChanged: filterStocks,
               decoration: InputDecoration(
-                labelText: 'Search',
+                hintText: 'Search',
                 prefixIcon: IconButton(
                     onPressed: () {
                       FocusScope.of(context).unfocus();
                     },
                     icon: const Icon(Icons.close)),
-                suffixIcon: IconButton(
-                    onPressed: () {
-                      filterStocks;
-                      FocusScope.of(context).unfocus();
-                    },
-                    icon: const Icon(Icons.search)),
+                suffixIcon: Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: CircleAvatar(
+                    radius: 15,
+                    backgroundColor: Colors.blue,
+                    child: IconButton(
+                        onPressed: () {
+                          filterStocks;
+                          FocusScope.of(context).unfocus();
+                        },
+                        icon: const Icon(
+                          Icons.search,
+                          color: Colors.white,
+                        )),
+                  ),
+                ),
+                filled: true,
+                border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(40.0),
+                ),
               ),
             ),
           ),
@@ -99,7 +117,7 @@ class _HomePageState extends State<HomePage> {
                 final isInWatchlist = watchlist.contains(stockData);
                 return ListTile(
                   title: Text('${stockData.symbol}'),
-                  subtitle: Text('Latest Price: ${stockData.latestPrice}'),
+                  subtitle: Text('Latest Price: ${stockData.latestPrice} INR'),
                   trailing: isInWatchlist
                       ? IconButton(
                           icon: const Icon(Icons.delete),
